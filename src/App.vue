@@ -3,7 +3,7 @@
     <head>
       <title>Auth</title>
       <link
-        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"
+        href="https://fonts.googleapis.com/css?family=Muli:300,400,500,700|Material+Icons"
         rel="stylesheet">
     </head>
     <v-app>
@@ -45,7 +45,7 @@ export default {
 
 <style>
   #app {
-      font-family: 'Roboto', 'Avenir', Helvetica, Arial, sans-serif;
+      font-family: 'Muli', 'Avenir', Helvetica, Arial, sans-serif;
       text-align: center;
       padding-left: 20px;
       padding-right: 20px;
