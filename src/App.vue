@@ -11,7 +11,7 @@
         <v-container>
           <img
             :src="logoSrcUrl"
-            height="50px">
+            height="100px">
           <router-view/>
         </v-container>
       </v-content>
