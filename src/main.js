@@ -6,17 +6,10 @@ import router from './router';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 import VueI18n from 'vue-i18n';
+import messages from '../locales/index';
 
 Vue.use(Vuetify);
 Vue.use(VueI18n);
-
-const messages = {
-  en: {
-    message: {
-      hello: 'hello world',
-    },
-  },
-};
 
 const i18n = new VueI18n({
   locale: 'en',
