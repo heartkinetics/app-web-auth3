@@ -1,3 +1,69 @@
 {
-	"hello": "Bonjour le monde"
+  "authorization": {
+    "signIn": "S'identifier",
+    "mfaVerification": "Vérification MFA",
+    "cancel": "Annuler",
+    "ok": "Ok",
+    "usernameOrEmail": "Nom d'utilisateur ou email",
+    "password": "Mot de passe",
+    "helpdesk": "bureau d'aide",
+    "supportIntro": "N'hésitez pas à joindre notre",
+    "supportEnd": "si vous avez des questions.",
+    "createAccount": "Créer un compte",
+    "forgotPassword": "Mot de passe oublié",
+    "changePassword": "Changer le mot de passe",
+    "fieldRequired": "Ce champ est requis.",
+    "emailMustBeValid": "L'email doit être valide"
+  },
+  "bits": {
+    "password": {
+      "passwordRequired": "Le mot de passe est requis.",
+      "passwordNotMatching": "La confirmation du mot de passe ne correspond pas."
+    }
+  },
+  "registerUser": {
+    "registerNewUser": "Enregistrer un nouvel utilisateur",
+    "email": "Email",
+    "optional": "Facultatif (requis pour la réinitialisation du mot de passe)",
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "chooseHosting": "Choisissez l'hébergement ...",
+    "hosting": "Hébergement",
+    "create": "Créer",
+    "clear": "Effacer",
+    "registeringAgreement": "En vous inscrivant, vous acceptez nos",
+    "fieldRequired": "Ce champ est requis.",
+    "userSuccessfullyCreated": "Nouvel utilisateur créé avec succès:",
+    "goToSignIn": "Aller à la connexion",
+    "termsOfUse": "conditions d'utilisation"
+  },
+  "resetPassword": {
+    "usernameOrEmail": "Nom d'utilisateur ou email",
+    "password": "Mot de passe",
+    "goToSignIn": "Aller à la connexion",
+    "fieldRequired": "Ce champ est requis.",
+    "setNewPassword": "Définissez un nouveau mot de passe",
+    "resetPassword": "Réinitialiser le mot de passe",
+    "changePassword": "Changer le mot de passe",
+    "requestPasswordReset": "Demander la réinitialisation du mot de passe",
+    "passwordResetInstructionsSent": "Nous avons envoyé des instructions de réinitialisation de mot de passe à votre adresse e-mail.",
+    "passwordSuccessfullyChanged": "Votre mot de passe a été modifié avec succès."
+  },
+  "changePassword": {
+    "changePassword": "Changer le mot de passe",
+    "usernameOrEmail": "Nom d'utilisateur ou email",
+    "password": "Mot de passe",
+    "newPassword": "Nouveau mot de passe",
+    "requestPasswordChange": "DEMANDER UN CHANGEMENT DE MOT DE PASSE",
+    "fieldRequired": "Ce champ est requis.",
+    "passwordSuccessfullyChanged": "Votre mot de passe a été changé avec succès."
+  },
+  "signinHub": {
+    "signinHub": "Hub de connexion",
+    "usernameOrEmail": "Nom d'utilisateur ou email",
+    "gotToMyHomepage": "Aller sur ma page d'accueil",
+    "newTo": "Nouveau sur",
+    "createAccount": "Créer un compte",
+    "fieldRequired": "Ce champ est requis."
+  }
 }

@@ -28,16 +28,18 @@ export default {
     label: {type: String, default: 'Password'},
     id: {type: String, default: 'password'},
   },
-  data: () => ({
-    visiblePass: false,
-    repass: '',
-    rules: {
-      required: value => !!value || 'Password is required.',
-    },
-  }),
+  data () {
+    return {
+      visiblePass: false,
+      repass: '',
+      rules: {
+        required: value => !!value || this.$i18n.t('bits.password.passwordRequired'),
+      },
+    };
+  },
   computed: {
     matchPassword: function () {
-      return this.value === this.repass || 'Password confirmation does not match.';
+      return this.value === this.repass || this.$t('bits.password.passwordNotMatching');
     },
   },
 };

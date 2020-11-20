@@ -1,3 +1,69 @@
 {
-	"hello": "Hallo"
+  "authorization": {
+    "signIn": "Inloggen",
+    "mfaVerification": "MFA verificatie",
+    "cancel": "Annuleren",
+    "ok": "Ok",
+    "usernameOrEmail": "Gebruikersnaam of email",
+    "password": "Wachtwoord",
+    "helpdesk": "helpdesk",
+    "supportIntro": "Voel je vrij om onze",
+    "supportEnd": "als je vragen hebt.",
+    "createAccount": "Account aanmaken",
+    "forgotPassword": "Wachtwoord vergeten",
+    "changePassword": "Verander wachtwoord",
+    "fieldRequired": "Dit veld is verplicht.",
+    "emailMustBeValid": "Email moet geldig zijn"
+  },
+  "bits": {
+    "password": {
+      "passwordRequired": "Een wachtwoord is verplicht.",
+      "passwordNotMatching": "Wachtwoordbevestiging komt niet overeen."
+    }
+  },
+  "registerUser": {
+    "registerNewUser": "Registreer een nieuwe gebruiker",
+    "email": "E-mail",
+    "optional": "Optioneel (vereist voor wachtwoordreset)",
+    "username": "Gebruikersnaam",
+    "password": "Wachtwoord",
+    "chooseHosting": "Kies hosting ...",
+    "hosting": "Hosting",
+    "create": "Creëer",
+    "clear": "Doorzichtig",
+    "registeringAgreement": "Door te registreren gaat u akkoord met onze",
+    "fieldRequired": "Dit veld is verplicht.",
+    "userSuccessfullyCreated": "Nieuwe gebruiker succesvol aangemaakt:",
+    "goToSignIn": "Ga naar Inloggen",
+    "termsOfUse": "gebruiksvoorwaarden"
+  },
+  "resetPassword": {
+    "usernameOrEmail": "Gebruikersnaam of email",
+    "password": "Wachtwoord",
+    "goToSignIn": "Ga naar Inloggen",
+    "fieldRequired": "Dit veld is verplicht.",
+    "setNewPassword": "Stel een nieuw wachtwoord in",
+    "resetPassword": "Wachtwoord opnieuw instellen",
+    "changePassword": "Verander wachtwoord",
+    "requestPasswordReset": "Wachtwoord reset aanvragen",
+    "passwordResetInstructionsSent": "We hebben instructies voor het opnieuw instellen van het wachtwoord naar uw e-mailadres gestuurd.",
+    "passwordSuccessfullyChanged": "Uw wachtwoord is succesvol gewijzigd."
+  },
+  "changePassword": {
+    "changePassword": "Verander wachtwoord",
+    "usernameOrEmail": "Gebruikersnaam of email",
+    "password": "Wachtwoord",
+    "newPassword": "Nieuw paswoord",
+    "requestPasswordChange": "VRAAG WACHTWOORD AAN",
+    "fieldRequired": "Dit veld is verplicht.",
+    "passwordSuccessfullyChanged": "Uw wachtwoord is succesvol gewijzigd."
+  },
+  "signinHub": {
+    "signinHub": "Signin-hub",
+    "usernameOrEmail": "Gebruikersnaam of email",
+    "gotToMyHomepage": "Ga naar mijn homepage",
+    "newTo": "Nieuw in",
+    "createAccount": "Account aanmaken",
+    "fieldRequired": "Dit veld is verplicht."
+  }
 }

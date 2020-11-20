@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Signin hub</h1>
+    <h1>{{ $t('signinHub.signinHub') }}</h1>
 
     <v-form
       ref="form"
@@ -11,18 +11,18 @@
         id="usernameOrEmail"
         v-model="ctx.user.username"
         :rules="[rules.required]"
-        label="Username or email"/>
+        :label="$t('signinHub.usernameOrEmail')"/>
 
       <v-btn
         id="submitButton"
         :disabled="!validForm"
         @click="submit"
-      >Go to my homepage</v-btn>
+      >{{ $t('signinHub.gotToMyHomepage') }}</v-btn>
 
     </v-form>
 
     <v-divider class="mt-3 mb-2"/>
-    <router-link :to="{ name: 'RegisterUser' }"><h3>New to {{ serviceInfo.name }} ? Create an account</h3></router-link>
+    <router-link :to="{ name: 'RegisterUser' }"><h3>{{ $t('signinHub.newTo') }} {{ serviceInfo.name }} ? {{ $t('signinHub.createAccount') }}</h3></router-link>
 
     <Alerts
       :errorMsg="error"/>
@@ -38,17 +38,19 @@ export default {
   components: {
     Alerts,
   },
-  data: () => ({
-    username: '',
-    error: '',
-    ctx: {},
-    c: null,
-    rules: {
-      required: value => !!value || 'This field is required.',
-    },
-    validForm: false,
-    serviceInfo: {name: ''},
-  }),
+  data () {
+    return {
+      username: '',
+      error: '',
+      ctx: {},
+      c: null,
+      rules: {
+        required: value => !!value || this.$i18n.t('signinHub.fieldRequired'),
+      },
+      validForm: false,
+      serviceInfo: {name: ''},
+    };
+  },
   async created () {
     this.ctx = new Context(this.$route.query);
     await this.ctx.init();

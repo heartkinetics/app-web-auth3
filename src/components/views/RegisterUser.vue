@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Register a new user</h1>
+    <h1>{{ $t('registerUser.registerNewUser') }}</h1>
 
     <v-form
       v-if="newUser==null"
@@ -12,19 +12,20 @@
       <v-text-field
         id="email"
         v-model="email"
-        label="E-mail"
-        placeholder="Optional (required for password reset)"
+        :label="$t('registerUser.email')"
+        :placeholder="$t('registerUser.optional')"
       />
 
       <v-text-field
         id="username"
         v-model="ctx.user.username"
         :rules="[rules.required]"
-        label="Username"
+        :label="$t('registerUser.username')"
       />
 
       <Password
         v-model="password"
+        :label="$t('registerUser.password')"
         :confirmation="true"/>
 
       <v-autocomplete
@@ -32,32 +33,32 @@
         v-model="hosting"
         :items="hostingsSelection"
         :rules="[rules.required]"
-        placeholder="Choose hosting..."
-        label="Hosting"
+        :placeholder="$t('registerUser.chooseHosting')"
+        :label="$t('registerUser.hosting')"
       />
 
       <v-btn
         id="submitButton"
         :disabled="!validForm||submitting"
         @click="submit"
-      >Create</v-btn>
+      >{{ $t('registerUser.create') }}</v-btn>
 
       <v-btn
         id="clearButton"
         @click="clear"
-      >Clear</v-btn>
+      >{{ $t('registerUser.clear') }}</v-btn>
 
       <div>
-        By registering you agree with our
+        {{ $t('registerUser.registeringAgreement') }}
         <a
           target="_blank"
           href="https://pryv.com/terms-of-use/">
-        terms of use</a>.
+        {{ $t('registerUser.termsOfUse') }}</a>.
       </div>
     </v-form>
     <div v-if="ctx.isAccessRequest()">
       <v-divider class="mt-3 mb-2"/>
-      <router-link :to="{ name: 'Authorization' }"><h3>Go to Sign in</h3></router-link>
+      <router-link :to="{ name: 'Authorization' }"><h3>{{ $t('registerUser.goToSignIn') }}</h3></router-link>
     </div>
 
     <Alerts
@@ -77,22 +78,24 @@ export default {
     Password,
     Alerts,
   },
-  data: () => ({
-    password: '',
-    email: '',
-    hosting: '',
-    hostingsSelection: [],
-    newUser: null,
-    submitting: false,
-    ctx: {},
-    c: null,
-    error: '',
-    success: '',
-    rules: {
-      required: value => !!value || 'This field is required.',
-    },
-    validForm: false,
-  }),
+  data () {
+    return {
+      password: '',
+      email: '',
+      hosting: '',
+      hostingsSelection: [],
+      newUser: null,
+      submitting: false,
+      ctx: {},
+      c: null,
+      error: '',
+      success: '',
+      rules: {
+        required: value => !!value || this.$i18n.t('registerUser.fieldRequired'),
+      },
+      validForm: false,
+    };
+  },
   async created () {
     this.ctx = new Context(this.$route.query);
     await this.ctx.init();
@@ -118,7 +121,7 @@ export default {
         this.c.createUser(availableCore, this.password, this.email, this.hosting)
           .then((newUser) => {
             this.newUser = newUser;
-            this.success = `New user successfully created: ${newUser.username}.`;
+            this.success = `${this.$t('registerUser.userSuccessfullyCreated')} ${newUser.username}.`;
             if (!this.ctx.isAccessRequest()) {
               location.href = this.ctx.pryvService.apiEndpointForSync(newUser.username);
             }

@@ -1,3 +1,69 @@
 {
-	"hello": "Hello world"
+  "authorization": {
+    "signIn": "Sign in",
+    "mfaVerification": "MFA verification",
+    "cancel": "Cancel",
+    "ok": "Ok",
+    "usernameOrEmail": "Username or email",
+    "password": "Password",
+    "helpdesk": "helpdesk",
+    "supportIntro": "Feel free to reach our",
+    "supportEnd": "if you have questions.",
+    "createAccount": "Create an account",
+    "forgotPassword": "Forgot password",
+    "changePassword": "Change password",
+    "fieldRequired": "This field is required.",
+    "emailMustBeValid": "E-mail must be valid"
+  },
+  "bits": {
+    "password": {
+      "passwordRequired": "Password is required.",
+      "passwordNotMatching": "Password confirmation does not match."
+    }
+  },
+  "registerUser": {
+    "registerNewUser": "Register a new user",
+    "email": "E-mail",
+    "optional": "Optional (required for password reset)",
+    "username": "Username",
+    "password": "Password",
+    "chooseHosting": "Choose hosting...",
+    "hosting": "Hosting",
+    "create": "Create",
+    "clear": "Clear",
+    "registeringAgreement": "By registering you agree with our",
+    "fieldRequired": "This field is required.",
+    "userSuccessfullyCreated": "New user successfully created:",
+    "goToSignIn": "Go to Sign in",
+    "termsOfUse": "terms of use"
+  },
+  "resetPassword": {
+    "usernameOrEmail": "Username or email",
+    "password": "Password",
+    "goToSignIn": "Go to Sign in",
+    "fieldRequired": "This field is required.",
+    "setNewPassword": "Set a new password",
+    "resetPassword": "Reset password",
+    "changePassword": "Change password",
+    "requestPasswordReset": "Request password reset",
+    "passwordResetInstructionsSent": "We have sent password reset instructions to your e-mail address.",
+    "passwordSuccessfullyChanged": "Your password has been successfully changed."
+  },
+  "changePassword": {
+    "changePassword": "Change password",
+    "usernameOrEmail": "Username or email",
+    "password": "Password",
+    "newPassword": "New password",
+    "requestPasswordChange": "REQUEST PASSWORD CHANGE",
+    "fieldRequired": "This field is required.",
+    "passwordSuccessfullyChanged": "Your password has been successfully changed."
+  },
+  "signinHub": {
+    "signinHub": "Signin hub",
+    "usernameOrEmail": "Username or email",
+    "gotToMyHomepage": "Go to my homepage",
+    "newTo": "New to",
+    "createAccount": "Create an account",
+    "fieldRequired": "This field is required."
+  }
 }

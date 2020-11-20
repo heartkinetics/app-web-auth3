@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Sign in</h1>
+    <h1>{{ $t('authorization.signIn') }}</h1>
 
     <Permissions
       v-if="ctx.checkAppResult.checkedPermissions != null"
@@ -17,7 +17,7 @@
       <v-card>
         <v-card-title
           class="headline grey lighten-2"
-        >MFA verification</v-card-title
+        >{{ $t('authorization.mfaVerification') }}</v-card-title
         >
         <v-text-field
           id="mfaCode"
@@ -33,9 +33,9 @@
               ctx.user.mfaToken = '';
               mfaCode = '';
             "
-          >Cancel</v-btn
+          >{{ $t('authorization.cancel') }}</v-btn
           >
-          <v-btn @click="handleMFA()">Ok</v-btn>
+          <v-btn @click="handleMFA()">{{ $t('authorization.ok') }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -48,26 +48,29 @@
         id="usernameOrEmail"
         v-model="ctx.user.username"
         :rules="[rules.required]"
-        label="Username or email"
+        :label="$t('authorization.usernameOrEmail')"
       />
 
-      <Password v-model="password" />
+      <Password
+        v-model="password"
+        :label="$t('authorization.password')"
+      />
 
       <v-btn
         id="submitButton"
         :disabled="!validForm || submitting"
         @click="submit"
-      >Sign In</v-btn
+      >{{ $t('authorization.signIn') }}</v-btn
       >
 
-      <v-btn @click="refuse">Cancel</v-btn>
+      <v-btn @click="refuse">{{ $t('authorization.cancel') }}</v-btn>
 
       <div v-if="serviceInfos.support">
-        Feel free to reach our
+        {{ $t('authorization.supportIntro') }}
         <a
           :href="serviceInfos.support"
-          target="_blank"> helpdesk</a>
-        if you have questions.
+          target="_blank"> {{ $t('authorization.helpdesk') }}</a>
+        {{ $t('authorization.supportEnd') }}
       </div>
     </v-form>
 
@@ -75,17 +78,17 @@
 
     <router-link
       :to="{ name: 'RegisterUser' }"
-    ><h3>Create an account</h3></router-link
+    ><h3>{{ $t('authorization.createAccount') }}</h3></router-link
     >
 
     <router-link
       :to="{ name: 'ResetPassword' }"
-    ><h3>Forgot password</h3></router-link
+    ><h3>{{ $t('authorization.forgotPassword') }}</h3></router-link
     >
 
     <router-link
       :to="{ name: 'ChangePassword' }"
-    ><h3>Change password</h3></router-link
+    ><h3>{{ $t('authorization.changePassword') }}</h3></router-link
     >
 
     <Alerts :errorMsg="error" />
@@ -105,24 +108,26 @@ export default {
     Permissions,
     Alerts,
   },
-  data: () => ({
-    password: '',
-    personalToken: '',
-    mfaToken: '',
-    mfaCode: '',
-    error: '',
-    checkedPermissions: null,
-    checkAppResult: null,
-    serviceInfos: {},
-    submitting: false,
-    c: null,
-    ctx: {},
-    rules: {
-      required: (value) => !!value || 'This field is required.',
-      email: (value) => /.+@.+/.test(value) || 'E-mail must be valid',
-    },
-    validForm: false,
-  }),
+  data () {
+    return {
+      password: '',
+      personalToken: '',
+      mfaToken: '',
+      mfaCode: '',
+      error: '',
+      checkedPermissions: null,
+      checkAppResult: null,
+      serviceInfos: {},
+      submitting: false,
+      c: null,
+      ctx: {},
+      rules: {
+        required: (value) => !!value || this.$i18n.t('authorization.fieldRequired'),
+        email: (value) => /.+@.+/.test(value) || this.$i18n.t('authorization.emailMustBeValid'),
+      },
+      validForm: false,
+    };
+  },
   computed: {
     mfaActivated: {
       get: function () {

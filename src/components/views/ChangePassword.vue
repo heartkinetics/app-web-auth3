@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Change password</h1>
+    <h1>{{ $t('changePassword.changePassword') }}</h1>
     <v-form
       v-if="showForm"
       ref="form"
@@ -10,23 +10,24 @@
         id="usernameOrEmail"
         v-model="ctx.user.username"
         :rules="[rules.required]"
-        label="Username or email"/>
+        :label="$t('changePassword.usernameOrEmail')"/>
       <Password
         v-model="oldPassword"
         :confirmation="false"
+        :label="$t('changePassword.password')"
         :id="'oldPassword'"
       />
       <Password
         v-model="newPassword"
         :confirmation="true"
-        :label="'New password'"
+        :label="$t('changePassword.newPassword')"
         :id="'newPassword'"
       />
       <v-btn
         id="submitButton"
         :disabled="!validForm || submitting"
         @click="submit"
-      >REQUEST PASSWORD CHANGE</v-btn
+      >{{ $t('changePassword.requestPasswordChange') }}</v-btn
       >
     </v-form>
     <Alerts
@@ -46,20 +47,22 @@ export default {
     Password,
     Alerts,
   },
-  data: () => ({
-    showForm: true,
-    oldPassword: '',
-    newPassword: '',
-    error: '',
-    success: '',
-    submitting: false,
-    ctx: {},
-    controllerFactory: null,
-    rules: {
-      required: (value) => !!value || 'This field is required.',
-    },
-    validForm: false,
-  }),
+  data () {
+    return {
+      showForm: true,
+      oldPassword: '',
+      newPassword: '',
+      error: '',
+      success: '',
+      submitting: false,
+      ctx: {},
+      controllerFactory: null,
+      rules: {
+        required: (value) => !!value || this.$i18n.t('changePassword.fieldRequired'),
+      },
+      validForm: false,
+    };
+  },
   async created () {
     this.ctx = new Context(this.$route.query);
     await this.ctx.init();
@@ -74,7 +77,7 @@ export default {
             .changePassword(this.oldPassword, this.newPassword))
           .then(() => {
             this.showForm = false;
-            this.success = 'Your password has been successfully changed.';
+            this.success = this.$t('changePassword.passwordSuccessfullyChanged');
           })
           .catch(this.showError)
           .finally(() => {
