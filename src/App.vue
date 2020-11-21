@@ -12,7 +12,7 @@
           <LocaleChanger/>
           <img
             :src="logoSrcUrl"
-            height="100px">
+            :height="$vuetify.breakpoint.smAndDown ? '50px' : '100px'">
           <router-view/>
         </v-container>
       </v-content>
