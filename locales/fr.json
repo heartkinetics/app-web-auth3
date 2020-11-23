@@ -35,7 +35,9 @@
     "fieldRequired": "Ce champ est requis.",
     "userSuccessfullyCreated": "Nouvel utilisateur créé avec succès:",
     "goToSignIn": "Aller à la connexion",
-    "termsOfUse": "conditions d'utilisation"
+    "termsOfUse": "conditions d'utilisation",
+    "studyCode": "Code étude",
+    "subjectCode": "Code sujet"
   },
   "resetPassword": {
     "usernameOrEmail": "Nom d'utilisateur ou email",

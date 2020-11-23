@@ -35,7 +35,9 @@
     "fieldRequired": "Dit veld is verplicht.",
     "userSuccessfullyCreated": "Nieuwe gebruiker succesvol aangemaakt:",
     "goToSignIn": "Ga naar Inloggen",
-    "termsOfUse": "gebruiksvoorwaarden"
+    "termsOfUse": "gebruiksvoorwaarden",
+    "studyCode": "Bestudeer code",
+    "subjectCode": "Onderwerpcode"
   },
   "resetPassword": {
     "usernameOrEmail": "Gebruikersnaam of email",

@@ -35,7 +35,9 @@
     "fieldRequired": "This field is required.",
     "userSuccessfullyCreated": "New user successfully created:",
     "goToSignIn": "Go to Sign in",
-    "termsOfUse": "terms of use"
+    "termsOfUse": "terms of use",
+    "studyCode": "Study code",
+    "subjectCode": "Subject code"
   },
   "resetPassword": {
     "usernameOrEmail": "Username or email",

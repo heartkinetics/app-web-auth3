@@ -37,6 +37,20 @@
         :label="$t('registerUser.hosting')"
       />
 
+      <v-text-field
+        id="studyCode"
+        v-model="studyCode"
+        :rules="[rules.required]"
+        :label="$t('registerUser.studyCode')"
+      />
+
+      <v-text-field
+        id="subjectCode"
+        v-model="subjectCode"
+        :rules="[rules.required]"
+        :label="$t('registerUser.subjectCode')"
+      />
+
       <v-btn
         id="submitButton"
         :disabled="!validForm||submitting"
@@ -84,6 +98,8 @@ export default {
       email: '',
       hosting: '',
       hostingsSelection: [],
+      studyCode: '',
+      subjectCode: '',
       newUser: null,
       submitting: false,
       ctx: {},
@@ -106,28 +122,53 @@ export default {
       .catch(this.showError);
   },
   methods: {
-    submit () {
+    async submit () {
       if (this.$refs.form.validate()) {
         this.submitting = true;
 
-        this.generateRandomEmailIfNeeded();
-        // get least occupied core in the hosting
-        let availableCore = '';
-        this.hostingsSelection.forEach(selection => {
-          if (selection.value === this.hosting) {
-            availableCore = selection.availableCore;
-          }
-        });
-        this.c.createUser(availableCore, this.password, this.email, this.hosting)
-          .then((newUser) => {
+        // Validate studyCode and subjectCode before proceeding
+        const response = await fetch(
+          `https://kino-research-uhcjixolra-ew.a.run.app/studies/${this.studyCode}/subjects/${this.subjectCode}/exists`
+        );
+
+        if (response.ok) {
+          this.generateRandomEmailIfNeeded();
+          // get least occupied core in the hosting
+          let availableCore = '';
+          this.hostingsSelection.forEach(selection => {
+            if (selection.value === this.hosting) {
+              availableCore = selection.availableCore;
+            }
+          });
+
+          try {
+            const newUser = await this.c.createUser(availableCore, this.password, this.email, this.hosting);
             this.newUser = newUser;
             this.success = `${this.$t('registerUser.userSuccessfullyCreated')} ${newUser.username}.`;
+
+            // Login user to retrieve access token
+            await this.c.login(this.password);
+
+            // Create external-references stream
+            await this.createExternalReferenceStream();
+
+            // Create external-reference event
+            await this.createExternalReferenceEvent();
+
             if (!this.ctx.isAccessRequest()) {
               location.href = this.ctx.pryvService.apiEndpointForSync(newUser.username);
             }
-          })
-          .catch(this.showError)
-          .finally(() => { this.submitting = false; });
+          } catch (error) {
+            this.showError(error);
+          }
+        } else {
+          const json = await response.json();
+          if (json && json.status === 404) {
+            this.error = json.error.message;
+          }
+        }
+
+        this.submitting = false;
       }
     },
     clear () {
@@ -146,6 +187,39 @@ export default {
       if (this.email == null || (typeof this.email === 'string' && this.email.length === 0)) {
         this.email = randomUsername(20) + '@pryv.io';
       }
+    },
+    async createExternalReferenceStream () {
+      await fetch(`https://${this.newUser.server}/streams`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': this.ctx.user.personalToken,
+        },
+        body: JSON.stringify({
+          'id': 'external-reference',
+          'name': 'External reference',
+          'parentId': null,
+        }),
+      });
+    },
+    async createExternalReferenceEvent () {
+      await fetch(`https://${this.newUser.server}/events`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': this.ctx.user.personalToken,
+        },
+        body: JSON.stringify({
+          'streamIds': ['external-reference'],
+          'type': 'external-reference/kino-research',
+          'content': {
+            'studyCode': this.studyCode,
+            'subjectCode': this.subjectCode,
+          },
+        }),
+      });
     },
   },
 };
