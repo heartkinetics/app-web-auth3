@@ -150,7 +150,7 @@ export default {
             await this.c.login(this.password);
 
             // Create external-references stream
-            await this.createExternalReferenceStream();
+            await this.createExternalReferencesStream();
 
             // Create external-reference event
             await this.createExternalReferenceEvent();
@@ -188,7 +188,7 @@ export default {
         this.email = randomUsername(20) + '@pryv.io';
       }
     },
-    async createExternalReferenceStream () {
+    async createExternalReferencesStream () {
       await fetch(`https://${this.newUser.server}/streams`, {
         method: 'POST',
         headers: {
@@ -197,8 +197,8 @@ export default {
           'Authorization': this.ctx.user.personalToken,
         },
         body: JSON.stringify({
-          'id': 'external-reference',
-          'name': 'External reference',
+          'id': 'external-references',
+          'name': 'External references',
           'parentId': null,
         }),
       });
@@ -212,7 +212,7 @@ export default {
           'Authorization': this.ctx.user.personalToken,
         },
         body: JSON.stringify({
-          'streamIds': ['external-reference'],
+          'streamIds': ['external-references'],
           'type': 'external-reference/kino-research',
           'content': {
             'studyCode': this.studyCode,
