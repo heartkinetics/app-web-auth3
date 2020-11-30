@@ -149,11 +149,13 @@ export default {
             // Login user to retrieve access token
             await this.c.login(this.password);
 
+            const endpoint = (new URL(this.newUser.apiEndpoint)).origin;
+
             // Create external-references stream
-            await this.createExternalReferencesStream();
+            await this.createExternalReferencesStream(endpoint);
 
             // Create external-reference event
-            await this.createExternalReferenceEvent();
+            await this.createExternalReferenceEvent(endpoint);
 
             if (!this.ctx.isAccessRequest()) {
               location.href = this.ctx.pryvService.apiEndpointForSync(newUser.username);
@@ -188,8 +190,8 @@ export default {
         this.email = randomUsername(20) + '@pryv.io';
       }
     },
-    async createExternalReferencesStream () {
-      await fetch(`https://${this.newUser.server}/streams`, {
+    async createExternalReferencesStream (endpoint) {
+      await fetch(`${endpoint}/streams`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -203,8 +205,8 @@ export default {
         }),
       });
     },
-    async createExternalReferenceEvent () {
-      await fetch(`https://${this.newUser.server}/events`, {
+    async createExternalReferenceEvent (endpoint) {
+      await fetch(`${endpoint}/events`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
