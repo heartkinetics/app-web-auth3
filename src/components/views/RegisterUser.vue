@@ -146,16 +146,15 @@ export default {
             this.newUser = newUser;
             this.success = `${this.$t('registerUser.userSuccessfullyCreated')} ${newUser.username}.`;
 
-            // Login user to retrieve access token
-            await this.c.login(this.password);
-
-            const endpoint = (new URL(this.newUser.apiEndpoint)).origin;
+            const url = new URL(this.newUser.apiEndpoint);
+            const endpoint = url.origin;
+            const personalToken = url.username;
 
             // Create external-references stream
-            await this.createExternalReferencesStream(endpoint);
+            await this.createExternalReferencesStream(endpoint, personalToken);
 
             // Create external-reference event
-            await this.createExternalReferenceEvent(endpoint);
+            await this.createExternalReferenceEvent(endpoint, personalToken);
 
             if (!this.ctx.isAccessRequest()) {
               location.href = this.ctx.pryvService.apiEndpointForSync(newUser.username);
@@ -190,13 +189,13 @@ export default {
         this.email = randomUsername(20) + '@pryv.io';
       }
     },
-    async createExternalReferencesStream (endpoint) {
+    async createExternalReferencesStream (endpoint, personalToken) {
       await fetch(`${endpoint}/streams`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': this.ctx.user.personalToken,
+          'Authorization': personalToken,
         },
         body: JSON.stringify({
           'id': 'external-references',
@@ -205,13 +204,13 @@ export default {
         }),
       });
     },
-    async createExternalReferenceEvent (endpoint) {
+    async createExternalReferenceEvent (endpoint, personalToken) {
       await fetch(`${endpoint}/events`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': this.ctx.user.personalToken,
+          'Authorization': personalToken,
         },
         body: JSON.stringify({
           'streamIds': ['external-references'],
