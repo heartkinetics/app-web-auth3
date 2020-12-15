@@ -142,19 +142,9 @@ export default {
           });
 
           try {
-            const newUser = await this.c.createUser(availableCore, this.password, this.email, this.hosting);
+            const newUser = await this.c.createUser(availableCore, this.password, this.email, this.hosting, this.studyCode, this.subjectCode);
             this.newUser = newUser;
             this.success = `${this.$t('registerUser.userSuccessfullyCreated')} ${newUser.username}.`;
-
-            const url = new URL(this.newUser.apiEndpoint);
-            const endpoint = url.origin;
-            const personalToken = url.username;
-
-            // Create external-references stream
-            await this.createExternalReferencesStream(endpoint, personalToken);
-
-            // Create external-reference event
-            await this.createExternalReferenceEvent(endpoint, personalToken);
 
             if (!this.ctx.isAccessRequest()) {
               location.href = this.ctx.pryvService.apiEndpointForSync(newUser.username);
@@ -188,39 +178,6 @@ export default {
       if (this.email == null || (typeof this.email === 'string' && this.email.length === 0)) {
         this.email = randomUsername(20) + '@pryv.io';
       }
-    },
-    async createExternalReferencesStream (endpoint, personalToken) {
-      await fetch(`${endpoint}/streams`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': personalToken,
-        },
-        body: JSON.stringify({
-          'id': 'external-references',
-          'name': 'External references',
-          'parentId': null,
-        }),
-      });
-    },
-    async createExternalReferenceEvent (endpoint, personalToken) {
-      await fetch(`${endpoint}/events`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': personalToken,
-        },
-        body: JSON.stringify({
-          'streamIds': ['external-references'],
-          'type': 'external-reference/kino-research',
-          'content': {
-            'studyCode': this.studyCode,
-            'subjectCode': this.subjectCode,
-          },
-        }),
-      });
     },
   },
 };
