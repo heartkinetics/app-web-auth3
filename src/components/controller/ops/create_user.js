@@ -43,6 +43,15 @@ async function createUser (
   // Create external-reference event
   await createExternalReferenceEvent(endpoint, personalToken, studyCode, subjectCode);
 
+  // // Create app access and set appAccessToken
+  // const { access: { token: appToken } } = await createAppAccess(endpoint, personalToken);
+
+  // // Create webhook
+  // await createWebhook(endpoint, appToken);
+
+  // // Send appToken to bridge
+  // await sendAppTokenToBridge(appToken);
+
   return newUser;
 }
 
@@ -88,5 +97,68 @@ async function createExternalReferenceEvent (endpoint, personalToken, studyCode,
     throw Error(response.statusText);
   }
 }
+
+// async function createAppAccess (endpoint, personalToken) {
+//   const response = await fetch(`${endpoint}/accesses`, {
+//     method: 'POST',
+//     headers: {
+//       'Accept': 'application/json',
+//       'Content-Type': 'application/json',
+//       'Authorization': personalToken,
+//     },
+//     body: JSON.stringify({
+//       'type': 'app',
+//       'name': 'heartkinetics-service',
+//       'permissions': [
+//         {
+//           'streamId': '*',
+//           'level': 'contribute',
+//         },
+//       ],
+//     }),
+//   });
+
+//   if (!response.ok) {
+//     throw Error(response.statusText);
+//   }
+
+//   const data = await response.json();
+//   return data;
+// }
+
+// async function createWebhook (endpoint, appToken) {
+//   const response = await fetch(`${endpoint}/webhooks`, {
+//     method: 'POST',
+//     headers: {
+//       'Accept': 'application/json',
+//       'Content-Type': 'application/json',
+//       'Authorization': appToken,
+//     },
+//     body: JSON.stringify({
+//       'url': 'https://test.io/webhhoks',
+//     }),
+//   });
+
+//   if (!response.ok) {
+//     throw Error(response.statusText);
+//   }
+// }
+
+// async function sendAppTokenToBridge (appToken) {
+//   const response = await fetch(`https://test.io/appTokens`, {
+//     method: 'POST',
+//     headers: {
+//       'Accept': 'application/json',
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({
+//       'token': appToken,
+//     }),
+//   });
+
+//   if (!response.ok) {
+//     throw Error(response.statusText);
+//   }
+// }
 
 export default createUser;
