@@ -93,6 +93,7 @@ export default {
     Alerts,
   },
   data () {
+    console.log(process.env.KINO_RESEARCH_API);
     return {
       password: '',
       email: '',
@@ -128,7 +129,7 @@ export default {
 
         // Validate studyCode and subjectCode before proceeding
         const response = await fetch(
-          `https://kino-research-uhcjixolra-ew.a.run.app/studies/${this.studyCode}/subjects/${this.subjectCode}/exists`
+          `${process.env.KINO_RESEARCH_API}/studies/${this.studyCode}/subjects/${this.subjectCode}/exists`
         );
 
         if (response.ok) {

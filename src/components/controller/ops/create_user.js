@@ -2,6 +2,9 @@
 
 import type Context from '../../../context.js';
 
+const kinoCoreApi = process.env.KINO_CORE_API;
+if (!kinoCoreApi) throw new Error('KINO_CORE environment variable missing !');
+
 export type NewUser = {
   username: string,
   server: string,
@@ -44,13 +47,13 @@ async function createUser (
   await createExternalReferenceEvent(endpoint, personalToken, studyCode, subjectCode);
 
   // // Create app access and set appAccessToken
-  // const { access: { token: appToken } } = await createAppAccess(endpoint, personalToken);
+  const { access: { token: appToken } } = await createAppAccess(endpoint, personalToken);
 
   // // Create webhook
-  // await createWebhook(endpoint, appToken);
+  await createWebhook(endpoint, appToken, newUser.username);
 
   // // Send appToken to bridge
-  // await sendAppTokenToBridge(appToken);
+  await sendAppTokenToBridge(newUser.username, appToken);
 
   return newUser;
 }
@@ -98,67 +101,66 @@ async function createExternalReferenceEvent (endpoint, personalToken, studyCode,
   }
 }
 
-// async function createAppAccess (endpoint, personalToken) {
-//   const response = await fetch(`${endpoint}/accesses`, {
-//     method: 'POST',
-//     headers: {
-//       'Accept': 'application/json',
-//       'Content-Type': 'application/json',
-//       'Authorization': personalToken,
-//     },
-//     body: JSON.stringify({
-//       'type': 'app',
-//       'name': 'heartkinetics-service',
-//       'permissions': [
-//         {
-//           'streamId': '*',
-//           'level': 'contribute',
-//         },
-//       ],
-//     }),
-//   });
+async function createAppAccess (endpoint, personalToken) {
+  const response = await fetch(`${endpoint}/accesses`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': personalToken,
+    },
+    body: JSON.stringify({
+      'type': 'app',
+      'name': 'heartkinetics-service',
+      'permissions': [
+        {
+          'streamId': '*',
+          'level': 'contribute',
+        },
+      ],
+    }),
+  });
 
-//   if (!response.ok) {
-//     throw Error(response.statusText);
-//   }
+  if (!response.ok) {
+    throw Error(response.statusText);
+  }
 
-//   const data = await response.json();
-//   return data;
-// }
+  const data = await response.json();
+  return data;
+}
 
-// async function createWebhook (endpoint, appToken) {
-//   const response = await fetch(`${endpoint}/webhooks`, {
-//     method: 'POST',
-//     headers: {
-//       'Accept': 'application/json',
-//       'Content-Type': 'application/json',
-//       'Authorization': appToken,
-//     },
-//     body: JSON.stringify({
-//       'url': 'https://test.io/webhhoks',
-//     }),
-//   });
+async function createWebhook (endpoint, appToken, username) {
+  const response = await fetch(`${endpoint}/webhooks`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': appToken,
+    },
+    body: JSON.stringify({
+      'url': `${kinoCoreApi}/${username}`,
+    }),
+  });
 
-//   if (!response.ok) {
-//     throw Error(response.statusText);
-//   }
-// }
+  if (!response.ok) {
+    throw Error(response.statusText);
+  }
+}
 
-// async function sendAppTokenToBridge (appToken) {
-//   const response = await fetch(`https://test.io/appTokens`, {
-//     method: 'POST',
-//     headers: {
-//       'Accept': 'application/json',
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({
-//       'token': appToken,
-//     }),
-//   });
+async function sendAppTokenToBridge (username, appToken) {
+  const response = await fetch(`${kinoCoreApi}/userPryvToken`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'username': username,
+      'token': appToken,
+    },
+  });
 
-//   if (!response.ok) {
-//     throw Error(response.statusText);
-//   }
-// }
+  if (!response.ok) {
+    throw Error(response.statusText);
+  }
+}
 
 export default createUser;
