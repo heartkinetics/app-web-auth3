@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "pryv-web-auth",
+    "site": "pryv-web-auth-dev",
     "public": "dist",
     "ignore": [
       "firebase.json",
