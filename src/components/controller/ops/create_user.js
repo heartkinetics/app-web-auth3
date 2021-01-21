@@ -75,6 +75,22 @@ async function createUser (
         'streamId': 'records',
         'level': 'manage',
       },
+      {
+        'streamId': 'height',
+        'level': 'read',
+      },
+      {
+        'streamId': 'weight',
+        'level': 'read',
+      },
+      {
+        'streamId': 'smartphone',
+        'level': 'read',
+      },
+      {
+        'streamId': 'external-references',
+        'level': 'read',
+      },
     ],
   });
 
