@@ -93,7 +93,6 @@ export default {
     Alerts,
   },
   data () {
-    console.log(process.env.KINO_RESEARCH_API);
     return {
       password: '',
       email: '',

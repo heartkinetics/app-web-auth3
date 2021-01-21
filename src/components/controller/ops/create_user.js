@@ -46,14 +46,43 @@ async function createUser (
   // Create external-reference event
   await createExternalReferenceEvent(endpoint, personalToken, studyCode, subjectCode);
 
-  // // Create app access and set appAccessToken
-  const { access: { token: appToken } } = await createAppAccess(endpoint, personalToken);
+  // Create webhook app access and set webhookAppToken
+  const { access: { token: webhookAppToken } } = await createAccess(endpoint, personalToken, {
+    'type': 'app',
+    'name': 'heartkinetics-webhook-service',
+    'permissions': [
+      {
+        'streamId': 'm-scg',
+        'level': 'read',
+      },
+    ],
+  });
 
-  // // Create webhook
-  await createWebhook(endpoint, appToken, newUser.username);
+  // Create bridge app access and set bridgeAppToken
+  const { access: { token: bridgeAppToken } } = await createAccess(endpoint, personalToken, {
+    'type': 'app',
+    'name': 'heartkinetics-bridge-service',
+    'permissions': [
+      {
+        'streamId': 'm-scg',
+        'level': 'read',
+      },
+      {
+        'streamId': 'record-summary',
+        'level': 'contribute',
+      },
+      {
+        'streamId': 'records',
+        'level': 'manage',
+      },
+    ],
+  });
 
-  // // Send appToken to bridge
-  await sendAppTokenToBridge(newUser.username, appToken);
+  // Create webhook
+  await createWebhook(endpoint, webhookAppToken, newUser.username);
+
+  // Send appToken to bridge
+  await sendAppTokenToBridge(newUser.username, bridgeAppToken);
 
   return newUser;
 }
@@ -101,7 +130,7 @@ async function createExternalReferenceEvent (endpoint, personalToken, studyCode,
   }
 }
 
-async function createAppAccess (endpoint, personalToken) {
+async function createAccess (endpoint, personalToken, body) {
   const response = await fetch(`${endpoint}/accesses`, {
     method: 'POST',
     headers: {
@@ -109,16 +138,7 @@ async function createAppAccess (endpoint, personalToken) {
       'Content-Type': 'application/json',
       'Authorization': personalToken,
     },
-    body: JSON.stringify({
-      'type': 'app',
-      'name': 'heartkinetics-service',
-      'permissions': [
-        {
-          'streamId': '*',
-          'level': 'contribute',
-        },
-      ],
-    }),
+    body: JSON.stringify(body),
   });
 
   if (!response.ok) {
@@ -151,10 +171,8 @@ async function sendAppTokenToBridge (username, appToken) {
   const response = await fetch(`${kinoCoreApi}/userPryvToken`, {
     method: 'POST',
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'username': username,
-      'token': appToken,
+      'Username': username,
+      'Token': appToken,
     },
   });
 
