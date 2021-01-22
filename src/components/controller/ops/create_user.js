@@ -47,16 +47,16 @@ async function createUser (
   await createExternalReferenceEvent(endpoint, personalToken, studyCode, subjectCode);
 
   // Create webhook app access and set webhookAppToken
-  const { access: { token: webhookAppToken } } = await createAccess(endpoint, personalToken, {
-    'type': 'app',
-    'name': 'heartkinetics-webhook-service',
-    'permissions': [
-      {
-        'streamId': 'm-scg',
-        'level': 'read',
-      },
-    ],
-  });
+  // const { access: { token: webhookAppToken } } = await createAccess(endpoint, personalToken, {
+  //   'type': 'app',
+  //   'name': 'heartkinetics-webhook-service',
+  //   'permissions': [
+  //     {
+  //       'streamId': 'm-scg',
+  //       'level': 'read',
+  //     },
+  //   ],
+  // });
 
   // Create bridge app access and set bridgeAppToken
   const { access: { token: bridgeAppToken } } = await createAccess(endpoint, personalToken, {
@@ -95,7 +95,7 @@ async function createUser (
   });
 
   // Create webhook
-  await createWebhook(endpoint, webhookAppToken, newUser.username);
+  await createWebhook(endpoint, bridgeAppToken, newUser.username);
 
   // Send appToken to bridge
   await sendAppTokenToBridge(newUser.username, bridgeAppToken);
