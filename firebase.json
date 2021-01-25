@@ -16,7 +16,7 @@
       ]
     },
     {
-      "site": "pryv-web-auth",
+      "site": "pryv-web-auth-prod",
       "public": "dist",
       "ignore": [
         "firebase.json",
