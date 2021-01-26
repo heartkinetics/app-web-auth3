@@ -28,6 +28,7 @@ class Context {
     mfaToken: string,
   };
   initialized: boolean;
+  isProduction: boolean;
 
   constructor (queryParams: QueryParameters) {
     this.language = queryParams.lang || 'en';
@@ -53,6 +54,7 @@ class Context {
     };
     this.checkAppResult = {};
     this.initialized = false;
+    this.isProduction = false;
   }
 
   async init () {
@@ -63,6 +65,9 @@ class Context {
       this.pryvService.setServiceInfo(this.accessState.serviceInfo);
     }
     await this.pryvService.info();
+    if (this.pryvService._pryvServiceInfo.home === process.env.PRYV_HOME_PROD) {
+      this.isProduction = true;
+    }
   }
 
   isAccessRequest () {

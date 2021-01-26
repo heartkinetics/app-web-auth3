@@ -127,8 +127,9 @@ export default {
         this.submitting = true;
 
         // Validate studyCode and subjectCode before proceeding
+        const kinoResearchApi = this.ctx.isProduction ? process.env.KINO_RESEARCH_API_PROD : process.env.KINO_RESEARCH_API_DEV;
         const response = await fetch(
-          `${process.env.KINO_RESEARCH_API}/studies/${this.studyCode}/subjects/${this.subjectCode}/exists`
+          `${kinoResearchApi}/studies/${this.studyCode}/subjects/${this.subjectCode}/exists`
         );
 
         if (response.ok) {

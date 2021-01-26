@@ -1,9 +1,10 @@
 // @flow
 
 import type Context from '../../../context.js';
-
-const kinoCoreApi = process.env.KINO_CORE_API;
-if (!kinoCoreApi) throw new Error('KINO_CORE environment variable missing !');
+if (!process.env.KINO_CORE_API_DEV) throw new Error('KINO_CORE_API_DEV environement variable missing !');
+if (!process.env.KINO_CORE_API_PROD) throw new Error('KINO_CORE_API_PROD environement variable missing !');
+const kinoCoreApiDev = process.env.KINO_CORE_API_DEV;
+const kinoCoreApiProd = process.env.KINO_CORE_API_PROD;
 
 export type NewUser = {
   username: string,
@@ -94,11 +95,13 @@ async function createUser (
     ],
   });
 
+  const kinoCoreApi = ctx.isProduction ? kinoCoreApiProd : kinoCoreApiDev;
+
   // Create webhook
-  await createWebhook(endpoint, bridgeAppToken, newUser.username);
+  await createWebhook(endpoint, bridgeAppToken, kinoCoreApi, newUser.username);
 
   // Send appToken to bridge
-  await sendAppTokenToBridge(newUser.username, bridgeAppToken);
+  await sendAppTokenToBridge(kinoCoreApi, newUser.username, bridgeAppToken);
 
   return newUser;
 }
@@ -165,7 +168,7 @@ async function createAccess (endpoint, personalToken, body) {
   return data;
 }
 
-async function createWebhook (endpoint, appToken, username) {
+async function createWebhook (endpoint, appToken, kinoCoreApi, username) {
   const response = await fetch(`${endpoint}/webhooks`, {
     method: 'POST',
     headers: {
@@ -183,7 +186,7 @@ async function createWebhook (endpoint, appToken, username) {
   }
 }
 
-async function sendAppTokenToBridge (username, appToken) {
+async function sendAppTokenToBridge (kinoCoreApi, username, appToken) {
   const response = await fetch(`${kinoCoreApi}/userPryvToken`, {
     method: 'POST',
     headers: {

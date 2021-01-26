@@ -25,9 +25,7 @@
     "upload": "sh scripts/upload.sh",
     "clear": "rm -rf dist/ && yarn setup",
     "webserver": "node node_modules/.bin/rec-la ./dist",
-    "webserver-test": "node node_modules/.bin/rec-la ./tests/webpage-auth/ 5443",
-    "deploy-dev": "firebase deploy --only hosting:pryv-web-auth-dev",
-    "deploy-prod": "firebase deploy --project=prod --only hosting:pryv-web-auth-prod"
+    "webserver-test": "node node_modules/.bin/rec-la ./tests/webpage-auth/ 5443"
   },
   "dependencies": {
     "lodash": "^4.17.20",
