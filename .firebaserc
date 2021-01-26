@@ -1,6 +1,0 @@
-{
-  "projects": {
-    "default": "kino-research",
-    "prod": "kino-research-prod"
-  }
-}
