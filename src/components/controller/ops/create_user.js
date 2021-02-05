@@ -65,10 +65,6 @@ async function createUser (
     'name': 'heartkinetics-bridge-service',
     'permissions': [
       {
-        'streamId': 'm-scg',
-        'level': 'read',
-      },
-      {
         'streamId': 'record-summary',
         'level': 'contribute',
       },
@@ -177,7 +173,7 @@ async function createWebhook (endpoint, appToken, kinoResearchPryvApi, username)
       'Authorization': appToken,
     },
     body: JSON.stringify({
-      'url': `${kinoResearchPryvApi}/${username}`,
+      'url': `${kinoResearchPryvApi}/webhook/${username}`,
     }),
   });
 
@@ -187,7 +183,7 @@ async function createWebhook (endpoint, appToken, kinoResearchPryvApi, username)
 }
 
 async function sendAppTokenToBridge (kinoResearchPryvApi, username, appToken) {
-  const response = await fetch(`${kinoResearchPryvApi}/userPryvToken`, {
+  const response = await fetch(`${kinoResearchPryvApi}/user-access-token`, {
     method: 'POST',
     headers: {
       'Username': username,
