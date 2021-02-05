@@ -1,10 +1,10 @@
 // @flow
 
 import type Context from '../../../context.js';
-if (!process.env.KINO_CORE_API_DEV) throw new Error('KINO_CORE_API_DEV environement variable missing !');
-if (!process.env.KINO_CORE_API_PROD) throw new Error('KINO_CORE_API_PROD environement variable missing !');
-const kinoCoreApiDev = process.env.KINO_CORE_API_DEV;
-const kinoCoreApiProd = process.env.KINO_CORE_API_PROD;
+if (!process.env.KINO_RESEARCH_PRYV_API_DEV) throw new Error('KINO_RESEARCH_PRYV_API_DEV environement variable missing !');
+if (!process.env.KINO_RESEARCH_PRYV_API_PROD) throw new Error('KINO_RESEARCH_PRYV_API_PROD environement variable missing !');
+const kinoResearchPryvApiDev = process.env.KINO_RESEARCH_PRYV_API_DEV;
+const kinoResearchPryvApiProd = process.env.KINO_RESEARCH_PRYV_API_PROD;
 
 export type NewUser = {
   username: string,
@@ -95,13 +95,13 @@ async function createUser (
     ],
   });
 
-  const kinoCoreApi = ctx.isProduction ? kinoCoreApiProd : kinoCoreApiDev;
+  const kinoResearchPryvApi = ctx.isProduction ? kinoResearchPryvApiProd : kinoResearchPryvApiDev;
 
   // Create webhook
-  await createWebhook(endpoint, bridgeAppToken, kinoCoreApi, newUser.username);
+  await createWebhook(endpoint, bridgeAppToken, kinoResearchPryvApi, newUser.username);
 
   // Send appToken to bridge
-  await sendAppTokenToBridge(kinoCoreApi, newUser.username, bridgeAppToken);
+  await sendAppTokenToBridge(kinoResearchPryvApi, newUser.username, bridgeAppToken);
 
   return newUser;
 }
@@ -168,7 +168,7 @@ async function createAccess (endpoint, personalToken, body) {
   return data;
 }
 
-async function createWebhook (endpoint, appToken, kinoCoreApi, username) {
+async function createWebhook (endpoint, appToken, kinoResearchPryvApi, username) {
   const response = await fetch(`${endpoint}/webhooks`, {
     method: 'POST',
     headers: {
@@ -177,7 +177,7 @@ async function createWebhook (endpoint, appToken, kinoCoreApi, username) {
       'Authorization': appToken,
     },
     body: JSON.stringify({
-      'url': `${kinoCoreApi}/${username}`,
+      'url': `${kinoResearchPryvApi}/${username}`,
     }),
   });
 
@@ -186,8 +186,8 @@ async function createWebhook (endpoint, appToken, kinoCoreApi, username) {
   }
 }
 
-async function sendAppTokenToBridge (kinoCoreApi, username, appToken) {
-  const response = await fetch(`${kinoCoreApi}/userPryvToken`, {
+async function sendAppTokenToBridge (kinoResearchPryvApi, username, appToken) {
+  const response = await fetch(`${kinoResearchPryvApi}/userPryvToken`, {
     method: 'POST',
     headers: {
       'Username': username,
