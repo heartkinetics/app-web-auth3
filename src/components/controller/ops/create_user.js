@@ -65,6 +65,10 @@ async function createUser (
     'name': 'heartkinetics-bridge-service',
     'permissions': [
       {
+        'streamId': 'm-scg',
+        'level': 'read',
+      },
+      {
         'streamId': 'record-summary',
         'level': 'contribute',
       },
