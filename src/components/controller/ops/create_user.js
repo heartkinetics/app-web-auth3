@@ -92,6 +92,10 @@ async function createUser (
         'streamId': 'external-references',
         'level': 'read',
       },
+      {
+        'streamId': 'surveys',
+        'level': 'read',
+      },
     ],
   });
 
