@@ -42,6 +42,7 @@
         v-model="studyCode"
         :rules="[rules.required]"
         :label="$t('registerUser.studyCode')"
+        :disabled="true"
       />
 
       <v-text-field
@@ -98,7 +99,7 @@ export default {
       email: '',
       hosting: '',
       hostingsSelection: [],
-      studyCode: '',
+      studyCode: 'Heartemis-ERASME',
       subjectCode: '',
       newUser: null,
       submitting: false,
