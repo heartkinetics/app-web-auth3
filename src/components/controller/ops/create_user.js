@@ -27,7 +27,7 @@ async function createUser (
   };
   const newUser = await ctx.pryvService.createUser(
     availableCore,
-    ctx.user.username,
+    ctx.user.username.toLowerCase(),
     password,
     email,
     hosting,
