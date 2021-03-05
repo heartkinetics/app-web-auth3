@@ -67,5 +67,8 @@
     "newTo": "Nieuw in",
     "createAccount": "Account aanmaken",
     "fieldRequired": "Dit veld is verplicht."
+  },
+  "app": {
+    "forClinicalTrialUseOnly": "Voor gebruik tijdens klinische proeven"
   }
 }

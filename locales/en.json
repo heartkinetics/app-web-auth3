@@ -67,5 +67,8 @@
     "newTo": "New to",
     "createAccount": "Create an account",
     "fieldRequired": "This field is required."
+  },
+  "app": {
+    "forClinicalTrialUseOnly": "For clinical trial use only"
   }
 }

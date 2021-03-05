@@ -27,7 +27,7 @@ export default {
       languages: [
         { value: 'en', label: '🇬🇧 English' },
         { value: 'fr', label: '🇫🇷 Français' },
-        { value: 'nl', label: '🇳🇱 Nederland' },
+        { value: 'nl', label: '🇳🇱 Nederlands' },
       ],
     };
   },

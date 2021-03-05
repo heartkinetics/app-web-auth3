@@ -10,6 +10,14 @@
       <v-content>
         <v-container>
           <LocaleChanger/>
+          <div class="text-xs-center">
+            <v-chip>
+              <v-avatar>
+                <v-icon>health_and_safety</v-icon>
+              </v-avatar>
+              {{ $t('app.forClinicalTrialUseOnly') }}
+            </v-chip>
+          </div>
           <img
             :src="logoSrcUrl"
             :height="$vuetify.breakpoint.smAndDown ? '50px' : '100px'">
@@ -52,8 +60,8 @@ export default {
   #app {
       font-family: 'Muli', 'Avenir', Helvetica, Arial, sans-serif;
       text-align: center;
-      padding-left: 20px;
-      padding-right: 20px;
+      padding-left: 10px;
+      padding-right: 10px;
   }
   h3 {
     margin: 8px;
