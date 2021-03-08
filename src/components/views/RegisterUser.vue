@@ -37,12 +37,12 @@
         :label="$t('registerUser.hosting')"
       />
 
-      <v-text-field
+      <v-autocomplete
         id="studyCode"
         v-model="studyCode"
+        :items="studyCodesSelection"
         :rules="[rules.required]"
         :label="$t('registerUser.studyCode')"
-        :disabled="true"
       />
 
       <v-text-field
@@ -99,6 +99,7 @@ export default {
       email: '',
       hosting: '',
       hostingsSelection: [],
+      studyCodesSelection: ['Heartemis-ERASME', 'DEMO01'],
       studyCode: 'Heartemis-ERASME',
       subjectCode: '',
       newUser: null,
